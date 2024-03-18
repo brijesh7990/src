@@ -9,7 +9,6 @@ class Standard(BaseModel):
         "school.School", on_delete=models.CASCADE, related_name="school_standard"
     )
     standard = models.CharField(max_length=50)
-    teacher = models.OneToOneField("user.User", on_delete=models.SET_NULL, null=True)
     note = models.TextField(null=True, blank=True)
     subject = models.ManyToManyField("academic.Subject")
 
@@ -26,7 +25,7 @@ class Section(BaseModel):
     standard = models.ForeignKey(
         "academic.Standard", on_delete=models.CASCADE, related_name="standard_section"
     )
-    teacher = models.OneToOneField("user.User", on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey("user.User", on_delete=models.SET_NULL, null=True)
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -40,6 +39,9 @@ class Subject(BaseModel):
     subject_code = models.CharField(max_length=20)
     name = models.CharField(max_length=255)
     teacher = models.ManyToManyField("user.User")
+
+    def __str__(self):
+        return self.name
 
 
 class Syllabus(BaseModel):

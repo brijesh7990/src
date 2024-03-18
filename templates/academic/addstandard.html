@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Standard
+{% endblock title %}
+
+{% block header %}
+    {% include "components/header.html" %}
+{% endblock header %}
+
+
+{% block sidebar %}
+    {% include "components/sidebar.html" %}
+{% endblock sidebar %}
+
+
+{% block pagemain %}
+Standard
+{% endblock pagemain %}
+
+{% block pagetitle %}
+        Standards
+{% endblock pagetitle %}
+
+{% block maincontent %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{form.as_p}}
+        
+        <input type="submit" class="btn btn-primary" value="Add Student">
+    </form>
+{% endblock maincontent %}

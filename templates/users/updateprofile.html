@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% include "components/header.html" %}
+{% endblock header %}
+
+
+{% block pagetitle %}
+    Update Profile
+{% endblock pagetitle %}
+
+{% block maincontent %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Update Profile">
+    </form>
+{% endblock maincontent %}
+
+{% block footer %}
+    {% include "components/footer.html" %}
+{% endblock footer %}

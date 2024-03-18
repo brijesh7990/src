@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+Standard
+{% endblock title %}
+
+{% block header %}
+    {% include "components/header.html" %}
+{% endblock header %}
+
+
+{% block sidebar %}
+    {% include "components/sidebar.html" %}
+{% endblock sidebar %}
+
+
+{% block pagemain %}
+Standard
+{% endblock pagemain %}
+
+{% block pagetitle %}
+        standard
+{% endblock pagetitle %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url "addstandard" %}">+Add Standard</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="standard-table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>school</th>
+                        <th>standard</th>
+                        <th>subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+
+{% block custom_js %}
+<script>
+    $('#standard-table').DataTable({
+        columnDefs: [{
+            orderable: true,
+            targets: -1
+        }, ],
+    
+        // Ajax for pagination
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{% url "standardajax" %}',
+            type: 'get',
+        },
+        columns: [
+            // data: json key from prepare_results, name: model field name
+            { data: 'school', name: 'school'},
+            { data: 'standard', name: 'standard' },
+            { data: 'subject', name: 'subject' },
+            
+        ]
+    
+    });
+</script>
+{% endblock custom_js %}

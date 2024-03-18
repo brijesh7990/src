@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+Students
+{% endblock title %}
+
+{% block header %}
+    {% include "components/header.html" %}
+{% endblock header %}
+
+
+{% block sidebar %}
+    {% include "components/sidebar.html" %}
+{% endblock sidebar %}
+
+
+
+{% block pagemain %}
+Parent
+{% endblock pagemain %}
+
+{% block pagetitle %}
+        Parents
+{% endblock pagetitle %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url "addparent" %}">+Add Parent</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="parent-table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+
+{% block custom_js %}
+<script>
+    $('#parent-table').DataTable({
+        columnDefs: [{
+            orderable: true,
+            targets: -1
+        }, ],
+    
+        // Ajax for pagination
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{% url "parentajax" %}',
+            type: 'get',
+        },
+        columns: [
+            // data: json key from prepare_results, name: model field name
+            { data: 'username', name: 'username'},
+            { data: 'email', name: 'email' },
+            { data: 'phone', name: 'phone' },
+            { data: 'address', name: 'address' },
+            
+        ]
+    
+    });
+</script>
+{% endblock custom_js %}

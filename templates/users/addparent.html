@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Students
+{% endblock title %}
+
+{% block header %}
+    {% include "components/header.html" %}
+{% endblock header %}
+
+
+{% block sidebar %}
+    {% include "components/sidebar.html" %}
+{% endblock sidebar %}
+
+
+{% block pagemain %}
+Student
+{% endblock pagemain %}
+
+{% block pagetitle %}
+        Students
+{% endblock pagetitle %}
+
+{% block maincontent %}
+    <form action="" method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        
+        <input type="submit" class="btn btn-primary" value="Add Parent">
+    </form>
+{% endblock maincontent %}

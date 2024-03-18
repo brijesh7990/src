@@ -58,9 +58,9 @@ class User(AbstractUser, BaseModel):
     blood_group = models.CharField(
         max_length=25, choices=blood_group_data, null=True, blank=True
     )
-    phone = models.CharField(max_length=15, null=True, blank=True)
-    religion = models.CharField(max_length=50, null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
+    phone = models.CharField(max_length=15)
+    religion = models.CharField(max_length=50)
+    address = models.TextField()
     state = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
@@ -81,8 +81,42 @@ class User(AbstractUser, BaseModel):
 
 
 class SchoolUser(BaseModel):
-    school = models.ForeignKey("school.School", on_delete=models.CASCADE, related_name = "school_user")
+    school = models.ForeignKey(
+        "school.School", on_delete=models.CASCADE, related_name="school_user"
+    )
+    standard = models.ManyToManyField("academic.Standard")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.user.username + " - " + self.school.name)
+
+
+class Student(BaseModel):
+    user = models.OneToOneField(
+        "user.User", on_delete=models.CASCADE, related_name="standard_student"
+    )
+    standard = models.ForeignKey(
+        "academic.Standard", on_delete=models.CASCADE, related_name="standard_student"
+    )
+    section = models.ForeignKey(
+        "academic.Section", on_delete=models.CASCADE, related_name="standard_student"
+    )
+    school = models.ForeignKey("school.School", on_delete=models.CASCADE)
+
+
+class Parent(BaseModel):
+    user = models.OneToOneField(
+        "user.User", on_delete=models.CASCADE, related_name="user_parent"
+    )
+    school = models.ForeignKey("school.School", on_delete=models.CASCADE)
+    father_name = models.CharField(max_length=255)
+    mother_name = models.CharField(max_length=255)
+    students = models.ManyToManyField("user.User")
+    father_occupation = models.CharField(max_length=255)
+    mother_occupation = models.CharField(max_length=255)
+
+
+class Teacher(BaseModel):
+    user = models.OneToOneField("user.User", on_delete=models.CASCADE)
+    joining_date = models.DateTimeField()
+    school = models.ForeignKey("school.School", on_delete=models.CASCADE)
